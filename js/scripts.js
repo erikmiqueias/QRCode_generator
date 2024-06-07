@@ -6,35 +6,36 @@ const qrCodeImg = document.querySelector("#qr-code img");
 // Eventos
 
 function generateQrCode() {
-    const qrCodeInputValue = qrCodeInput.value;
-    if (!qrCodeInputValue) return;
-    qrCodeBtn.innerText = "Gerando código...";
+  const qrCodeInputValue = qrCodeInput.value;
+  if (!qrCodeInputValue) return;
+  qrCodeBtn.innerText = "";
+  qrCodeBtn.classList.add("loading");
 
-    qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrCodeInputValue}`;
+  qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrCodeInputValue}`;
 
-    qrCodeImg.addEventListener("load", () => {
-        container.classList.add("active");
-        qrCodeBtn.innerText = "Código gerado!";
-    });
+  qrCodeImg.addEventListener("load", () => {
+    container.classList.add("active");
+    qrCodeBtn.classList.remove("loading");
+    qrCodeBtn.innerText = "Código gerado!";
+  });
 }
 
 // Gerar QR Code
 qrCodeBtn.addEventListener("click", () => {
-    generateQrCode();
+  generateQrCode();
 });
 
 qrCodeInput.addEventListener("keydown", (e) => {
-    if(e.code === "Enter"){
-        generateQrCode();
-    }
+  if (e.code === "Enter") {
+    generateQrCode();
+  }
 });
-
 
 // Limpar área do QR Code
 
 qrCodeInput.addEventListener("keyup", () => {
-    if(!qrCodeInput.value){
-        container.classList.remove("active");
-        qrCodeBtn.innerText = "Gerar QR Code"
-    }
-})
+  if (!qrCodeInput.value) {
+    container.classList.remove("active");
+    qrCodeBtn.innerText = "Gerar QR Code";
+  }
+});
